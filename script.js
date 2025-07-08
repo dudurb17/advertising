@@ -151,6 +151,64 @@ document.addEventListener("DOMContentLoaded", function () {
   updateActiveLink(); // Verificar na carga inicial
 
   console.log("Site carregado com sucesso!");
+
+  // Image loading optimization for Vercel
+  function optimizeImageLoading() {
+    const images = document.querySelectorAll(".member-photo");
+
+    images.forEach((img) => {
+      // Add loading attribute for better performance
+      img.setAttribute("loading", "lazy");
+
+      // Add error handling
+      img.addEventListener("error", function () {
+        console.log("Image failed to load:", this.src);
+        // Create a fallback with initials
+        const memberName = this.alt;
+        const initials = memberName
+          .split(" ")
+          .map((n) => n[0])
+          .join("");
+
+        // Create a canvas fallback
+        const canvas = document.createElement("canvas");
+        canvas.width = 80;
+        canvas.height = 80;
+        const ctx = canvas.getContext("2d");
+
+        // Draw gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 80, 80);
+        gradient.addColorStop(0, "#667eea");
+        gradient.addColorStop(1, "#764ba2");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 80, 80);
+
+        // Draw initials
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 24px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(initials, 40, 40);
+
+        // Replace image with canvas
+        this.src = canvas.toDataURL();
+        this.style.objectFit = "contain";
+      });
+
+      // Add load success handler
+      img.addEventListener("load", function () {
+        console.log("Image loaded successfully:", this.src);
+        this.style.opacity = "1";
+      });
+
+      // Set initial opacity
+      img.style.opacity = "0";
+      img.style.transition = "opacity 0.3s ease";
+    });
+  }
+
+  // Call image optimization when DOM is loaded
+  optimizeImageLoading();
 });
 
 // === CSS PARA LINKS ATIVOS E ANIMAÇÕES ===

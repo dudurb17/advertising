@@ -26,6 +26,37 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
+    },
+    {
+      "source": "/(.*)\\.(jpg|jpeg)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/jpeg"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(png)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/png"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
     }
-  ]
+  ],
+  "images": {
+    "domains": [],
+    "sizes": [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    "formats": ["image/webp", "image/avif"]
+  }
 }
