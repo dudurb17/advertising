@@ -98,67 +98,10 @@ document.addEventListener("DOMContentLoaded", function () {
     checkStats(); // Verificar na carga inicial
   }
 
-  // === FORMULÁRIO DE CONTATO ===
-  const contactForm = document.querySelector(".form");
-  if (contactForm) {
-    contactForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const name = contactForm.querySelector("#name").value.trim();
-      const email = contactForm.querySelector("#email").value.trim();
-      const phone = contactForm.querySelector("#phone").value.trim();
-      const service = contactForm.querySelector("#service").value;
-      const message = contactForm.querySelector("#message").value.trim();
-
-      // Validação básica
-      if (!name || !email || !service) {
-        alert("Por favor, preencha todos os campos obrigatórios.");
-        return;
-      }
-
-      // Validar email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        alert("Por favor, insira um email válido.");
-        return;
-      }
-
-      // Preparar mensagem para WhatsApp
-      let whatsappMessage = `Olá! Meu nome é ${name}.\n\n`;
-      whatsappMessage += `Serviço de interesse: ${service}\n`;
-      whatsappMessage += `Email: ${email}\n`;
-      if (phone) whatsappMessage += `Telefone: ${phone}\n`;
-      whatsappMessage += `\nMensagem: ${
-        message || "Gostaria de saber mais sobre os serviços."
-      }`;
-
-      // Simular envio
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-
-      submitBtn.innerHTML =
-        '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-      submitBtn.disabled = true;
-
-      setTimeout(() => {
-        alert("Mensagem enviada! Redirecionando para WhatsApp...");
-        contactForm.reset();
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-
-        // Abrir WhatsApp
-        const whatsappUrl = `https://wa.me/5554967666619?text=${encodeURIComponent(
-          whatsappMessage
-        )}`;
-        window.open(whatsappUrl, "_blank");
-      }, 1500);
-    });
-  }
-
   // === ANIMAÇÕES SIMPLES ===
   function animateOnScroll() {
     const elements = document.querySelectorAll(
-      ".service-card, .benefit-item, .member, .hero-card"
+      ".service-card, .benefit-item, .member, .hero-card, .contact-card"
     );
 
     elements.forEach((element) => {
@@ -171,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Configurar elementos para animação
   const animatedElements = document.querySelectorAll(
-    ".service-card, .benefit-item, .member, .hero-card"
+    ".service-card, .benefit-item, .member, .hero-card, .contact-card"
   );
   animatedElements.forEach((element) => {
     element.classList.add("animate-prepare");
@@ -246,6 +189,10 @@ style.textContent = `
     }
     
     .member.animate-in:hover {
+        transform: translateY(-5px) !important;
+    }
+    
+    .contact-card.animate-in:hover {
         transform: translateY(-5px) !important;
     }
 `;
