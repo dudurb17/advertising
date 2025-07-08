@@ -1,3 +1,57 @@
+// Debug e verificação para produção
+function debugProduction() {
+  console.log("=== DEBUG E&C SOLUTIONS ===");
+  console.log("URL atual:", window.location.href);
+  console.log("User Agent:", navigator.userAgent);
+  console.log("Timestamp:", new Date().toISOString());
+
+  // Verificar recursos externos
+  const externalResources = [
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css",
+    "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap",
+  ];
+
+  externalResources.forEach((url) => {
+    fetch(url, { method: "HEAD" })
+      .then((response) => {
+        console.log(`✅ Recurso externo OK: ${url} (${response.status})`);
+      })
+      .catch((error) => {
+        console.error(`❌ Erro no recurso externo: ${url}`, error);
+      });
+  });
+
+  // Verificar imagens locais
+  const localImages = ["./eduardo-foto.jpeg", "./carlos.jpeg"];
+  localImages.forEach((src) => {
+    const img = new Image();
+    img.onload = () => console.log(`✅ Imagem local OK: ${src}`);
+    img.onerror = () => console.error(`❌ Erro na imagem local: ${src}`);
+    img.src = src;
+  });
+
+  // Verificar CSS e JS
+  const localResources = ["./styles.css", "./script.js"];
+  localResources.forEach((url) => {
+    fetch(url, { method: "HEAD" })
+      .then((response) => {
+        console.log(`✅ Recurso local OK: ${url} (${response.status})`);
+      })
+      .catch((error) => {
+        console.error(`❌ Erro no recurso local: ${url}`, error);
+      });
+  });
+
+  console.log("=== FIM DEBUG ===");
+}
+
+// Executar debug quando página carrega
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", debugProduction);
+} else {
+  debugProduction();
+}
+
 // Aguarda o carregamento completo do DOM
 document.addEventListener("DOMContentLoaded", function () {
   // === MENU MOBILE ===
@@ -101,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // === ANIMAÇÕES SIMPLES ===
   function animateOnScroll() {
     const elements = document.querySelectorAll(
-      ".service-card, .benefit-item, .member, .hero-card, .contact-card"
+      ".service-card, .benefit-item, .member, .hero-card, .contact-card, .contact-info, .contact-options"
     );
 
     elements.forEach((element) => {
@@ -114,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Configurar elementos para animação
   const animatedElements = document.querySelectorAll(
-    ".service-card, .benefit-item, .member, .hero-card, .contact-card"
+    ".service-card, .benefit-item, .member, .hero-card, .contact-card, .contact-info, .contact-options"
   );
   animatedElements.forEach((element) => {
     element.classList.add("animate-prepare");
@@ -279,6 +333,33 @@ style.textContent = `
     
     .contact-card.animate-in:hover {
         transform: translateY(-5px) !important;
+    }
+    
+    .contact-info.animate-in:hover {
+        transform: translateY(-3px) !important;
+    }
+    
+    .contact-options.animate-in:hover {
+        transform: translateY(-3px) !important;
+    }
+    
+    /* Melhorar visibilidade das imagens */
+    .member-photo {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    /* Estilos para cartões de contato */
+    .contact-card {
+        animation-delay: 0.1s;
+    }
+    
+    .contact-card:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+    
+    .contact-card:nth-child(3) {
+        animation-delay: 0.3s;
     }
 `;
 document.head.appendChild(style);
