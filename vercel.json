@@ -19,7 +19,25 @@
       ]
     },
     {
-      "source": "/(.*)\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot)",
+      "source": "/(.*)\\.(js|css)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=86400"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(jpg|jpeg|png|gif|ico|svg)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(woff|woff2|ttf|eot)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -28,28 +46,11 @@
       ]
     },
     {
-      "source": "/(.*)\\.(jpg|jpeg)",
+      "source": "/index.html",
       "headers": [
         {
-          "key": "Content-Type",
-          "value": "image/jpeg"
-        },
-        {
           "key": "Cache-Control",
-          "value": "public, max-age=86400"
-        }
-      ]
-    },
-    {
-      "source": "/(.*)\\.(png)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "image/png"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400"
+          "value": "public, max-age=0, s-maxage=86400"
         }
       ]
     }

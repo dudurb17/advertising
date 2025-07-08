@@ -160,10 +160,26 @@ document.addEventListener("DOMContentLoaded", function () {
       // Add loading attribute for better performance
       img.setAttribute("loading", "lazy");
 
+      // Add debug info
+      console.log("Loading image:", img.src, "Alt:", img.alt);
+
       // Add error handling
       img.addEventListener("error", function () {
-        console.log("Image failed to load:", this.src);
-        // Create a fallback with initials
+        console.error("Image failed to load:", this.src);
+        console.error("Current location:", window.location.href);
+
+        // Try with different path formats
+        const currentSrc = this.src;
+        const imageName = currentSrc.split("/").pop();
+
+        // Try absolute path first
+        if (!currentSrc.startsWith(window.location.origin)) {
+          console.log("Trying absolute path...");
+          this.src = window.location.origin + "/" + imageName;
+          return;
+        }
+
+        // If still fails, create fallback
         const memberName = this.alt;
         const initials = memberName
           .split(" ")
@@ -172,27 +188,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Create a canvas fallback
         const canvas = document.createElement("canvas");
-        canvas.width = 80;
-        canvas.height = 80;
+        canvas.width = 120;
+        canvas.height = 120;
         const ctx = canvas.getContext("2d");
 
         // Draw gradient background
-        const gradient = ctx.createLinearGradient(0, 0, 80, 80);
+        const gradient = ctx.createLinearGradient(0, 0, 120, 120);
         gradient.addColorStop(0, "#667eea");
         gradient.addColorStop(1, "#764ba2");
         ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, 80, 80);
+        ctx.fillRect(0, 0, 120, 120);
 
         // Draw initials
         ctx.fillStyle = "#fff";
-        ctx.font = "bold 24px Arial";
+        ctx.font = "bold 36px Arial";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(initials, 40, 40);
+        ctx.fillText(initials, 60, 60);
 
         // Replace image with canvas
         this.src = canvas.toDataURL();
         this.style.objectFit = "contain";
+        console.log("Using fallback for:", memberName);
       });
 
       // Add load success handler
@@ -201,9 +218,19 @@ document.addEventListener("DOMContentLoaded", function () {
         this.style.opacity = "1";
       });
 
-      // Set initial opacity
+      // Set initial opacity and timeout fallback
       img.style.opacity = "0";
       img.style.transition = "opacity 0.3s ease";
+
+      // Fallback timeout
+      setTimeout(() => {
+        if (img.style.opacity === "0") {
+          console.warn(
+            "Image taking too long to load, triggering error handler"
+          );
+          img.dispatchEvent(new Event("error"));
+        }
+      }, 5000);
     });
   }
 
