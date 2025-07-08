@@ -1282,8 +1282,14 @@ body {
   }
 
   .contact-options {
-    padding: 20px 15px;
-    margin: 0;
+    padding: 20px 8px;
+    margin: 0 auto;
+    max-width: 98vw;
+    box-sizing: border-box;
+  }
+  .container {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .contact-options h3 {
