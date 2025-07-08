@@ -650,21 +650,21 @@ body {
 }
 
 .social-link:nth-child(1),
-.social-link:nth-child(2) {
+.social-link:nth-child(3) {
   background: #0077b5;
   color: white;
   box-shadow: 0 2px 10px rgba(0, 119, 181, 0.3);
 }
 
 .social-link:nth-child(1):hover,
-.social-link:nth-child(2):hover {
+.social-link:nth-child(3):hover {
   background: #005582;
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0, 119, 181, 0.5);
   color: white;
 }
 
-.social-link:nth-child(3),
+.social-link:nth-child(2),
 .social-link:nth-child(4) {
   background: linear-gradient(
     45deg,
@@ -678,7 +678,7 @@ body {
   box-shadow: 0 2px 10px rgba(225, 48, 108, 0.3);
 }
 
-.social-link:nth-child(3):hover,
+.social-link:nth-child(2):hover,
 .social-link:nth-child(4):hover {
   background: linear-gradient(
     45deg,
@@ -1207,6 +1207,19 @@ body {
   .contact-info-extras {
     grid-template-columns: 1fr;
     gap: 15px;
+    margin-top: 20px;
+  }
+
+  .info-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .info-item i {
+    margin-top: 0;
+    font-size: 1.3rem;
   }
 
   .email-buttons {
@@ -1270,6 +1283,17 @@ body {
 
   .contact-options {
     padding: 20px 15px;
+    margin: 0;
+  }
+
+  .contact-options h3 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+
+  .contact-options > p {
+    font-size: 1rem;
+    margin-bottom: 20px;
   }
 
   .contact-card {
@@ -1286,10 +1310,23 @@ body {
   }
 
   .info-item {
-    padding: 15px;
+    padding: 12px;
     flex-direction: column;
     text-align: center;
-    gap: 10px;
+    gap: 8px;
+  }
+
+  .info-item strong {
+    font-size: 1rem;
+  }
+
+  .info-item p {
+    font-size: 0.9rem;
+  }
+
+  .contact-info-extras {
+    gap: 12px;
+    margin-top: 15px;
   }
 
   .whatsapp-float {
