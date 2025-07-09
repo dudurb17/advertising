@@ -1221,6 +1221,10 @@ body {
     margin-top: 0;
     font-size: 1.3rem;
   }
+  
+  .info-item > div {
+  width: 100%;
+  }
 
   .email-buttons {
     flex-direction: column;
